@@ -43,6 +43,7 @@ use neovim pre-config lunavim
 - neovim python api
    ```powershell
    pip3 install neovim
+   npm install -g neovim
    ```
 - lunavim install
   ```powershell
