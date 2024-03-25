@@ -10,6 +10,28 @@ use neovim pre-config lunavim
 
 ## Introduction
 
+### prerequisite
+
+- powershell >= 7.4.1
+   ```powershell
+   winget install --id=Microsoft.PowerShell --version=7.4.1
+   ```
+- NodeJS
+   ```powershell
+   winget install NodeJS
+   ```
+- make
+   ```powershell
+   choco install make
+   ```
+- neovim 0.9.4 (above)
+  ```powershell
+  winget install neovim
+  # or
+  # winget upgrade neovim
+  ```
+
+
 ### Current support neovim version
 
 NVIM v0.9.4 (release)
