@@ -141,6 +141,10 @@ nnoremap <silent> ]} zj
 
 
 nnoremap <a-v> <c-v>
+
+inoremap <c-v> <c-r>+
+cnoremap <c-v> <c-r>+
+nnoremap <c-v> p
 " ==================== Cursor Movement ====================
 " New cursor movement (the default arrow keys are used for resizing windows)
 "     ^
