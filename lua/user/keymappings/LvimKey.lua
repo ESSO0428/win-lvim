@@ -1,7 +1,8 @@
-lvim.keys.normal_mode['<leader>rc']    = ":e $HOME\\AppData\\Local\\lvim\\config.lua<cr>"
+lvim.keys.normal_mode['<leader>rc']    = ":e $HOME/AppData/Local/lvim/config.lua<cr>"
+
 -- lvim.keys.normal_mode['<leader>rb'] = ":e $HOME/.bashrc<cr>"
 lvim.keys.normal_mode['<leader>rw']    =
-":e $HOME\\AppData\\Local\\Packages\\Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe\\LocalState\\settings.json<cr>"
+":e $HOME/AppData/Local/Packages/Microsoft.WindowsTerminalPreview_8wekyb3d8bbwe/LocalState/settings.json<cr>"
 
 lvim.keys.normal_mode['<leader>rt']    = "<Cmd>ToggleTermSendCurrentLine<cr>"
 lvim.keys.visual_mode['<leader>rt']    = { ":ToggleTermSendVisualLines", silent = false }

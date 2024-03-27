@@ -78,62 +78,31 @@ for _, filetype in ipairs(dap_filetypes) do
 end
 
 -- 获取用户主目录
-local home = os.getenv("HOME")
+-- local home = os.getenv("HOME")
 
 -- 构建源和目标路径
--- local sourcePath = home .. "/.local/share/lunarvim/lvim/snapshots/default.json"
--- local targetPath = home .. "/.config/lvim/snapshots/default.json"
--- local targetCopyDefaultSetting = home .. "/.config/lvim/snapshots/backup_default.json"
--- local targetCopyLastSetting = home .. "/.config/lvim/snapshots/backup_last.json"
+local sourcePath = "$HOME/AppData/Roaming/lunarvim/lvim/snapshots/default.json"
+local targetPath = "$HOME/AppData/Local/lvim/snapshots/default.json"
 
--- -- 检查目标路径是否存在
--- local file = io.open(targetPath, "r")
--- if file then
---   -- 目标路径已存在，关闭文件句柄
---   os.execute("cp -f " .. sourcePath .. " " .. targetCopyLastSetting)
---   file:close()
--- else
---   -- 目标路径不存在，创建目录并创建符号链接
---   os.execute("mkdir -p " .. home .. "/.config/lvim/snapshots")
---   os.execute("ln -s " .. sourcePath .. " " .. targetPath)
---   os.execute("cp -f " .. sourcePath .. " " .. targetCopyDefaultSetting)
---   os.execute("cp -f " .. sourcePath .. " " .. targetCopyLastSetting)
--- end
+local targetCopyDefaultSetting = "$HOME/AppData/Local/lvim/snapshots/backup_default.json"
+local targetCopyLastSetting = "$HOME/AppData/Local/lvim/snapshots/backup_last.json"
 
+-- 检查目标路径是否存在
+local file = io.open(targetPath, "r")
+if file then
+  -- 目标路径已存在，关闭文件句柄
+  os.execute("cp -f " .. sourcePath .. " " .. targetCopyLastSetting)
+  file:close()
+else
+  -- 目标路径不存在，创建目录并创建符号链接
+  os.execute("mkdir -p " .. "$HOME/AppData/Local/lvim/snapshots")
+  os.execute("ln -s " .. sourcePath .. " " .. targetPath)
+  os.execute("cp -f " .. sourcePath .. " " .. targetCopyDefaultSetting)
+  os.execute("cp -f " .. sourcePath .. " " .. targetCopyLastSetting)
+end
 
--- -- 與 vscode 集成
--- --code --remote ssh-remote+LabServerDP
--- -- default hostname
--- host = "YourVscodeReomoteServerName"
--- function GetServerHostName(host)
---   vim.g.host = host
---   local ip = nil
---   local command = io.popen("hostname -I | awk '{print $1}'")
---   ip = command:read("*line")
---   command:close()
-
---   -- 使用 Lua 读取 ~/.ssh/host_names 文件获取主机名和对应的 IP
---   local hostnames_file = os.getenv("HOME") .. "/.ssh/host_names"
---   if vim.fn.filereadable(hostnames_file) == 1 then
---     local file = io.open(hostnames_file, "r")
---     if file then
---       for line in file:lines() do
---         local hostname, hostname_ip = line:match("(%S+)%s+(%S+)")
---         if hostname_ip and hostname_ip == ip then
---           host = hostname
---           vim.g.host = host
---           break
---         end
---       end
---       file:close()
---     end
---   end
--- end
-
--- GetServerHostName(host)
-
-vim.cmd('source $HOME\\AppData\\Local\\lvim\\init.vim')
-vim.cmd('source $HOME\\AppData\\Local\\lvim\\keymap.vim')
+vim.cmd('source $HOME/AppData/Local/lvim/init.vim')
+vim.cmd('source $HOME/AppData/Local/lvim/keymap.vim')
 
 
 
