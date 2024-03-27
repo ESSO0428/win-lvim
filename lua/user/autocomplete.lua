@@ -1,9 +1,9 @@
 require "user.snippets"
-require("luasnip.loaders.from_lua").lazy_load { paths = "~/.config/lvim/LuaSnipSourceSnippets/" }
+require("luasnip.loaders.from_lua").lazy_load { paths = "$HOME\\AppData\\Local\\lvim\\LuaSnipSourceSnippets\\"}
 local cmp = require("lvim.utils.modules").require_on_index "cmp"
 local cmp_mapping = require "cmp.config.mapping"
 local luasnip = require("lvim.utils.modules").require_on_index "luasnip"
-local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
+-- local cmp_ultisnips_mappings = require("cmp_nvim_ultisnips.mappings")
 
 lvim.builtin.cmp.enabled = function()
   local buftype = vim.api.nvim_buf_get_option(0, "buftype")
@@ -84,7 +84,7 @@ lvim.builtin.cmp.experimental.ghost_text = true
 -- lvim.builtin.cmp.sources[#lvim.builtin.cmp.sources + 1] = { name = "jupyter" }
 table.insert(lvim.builtin.cmp.sources, 2, { name = "jupyter" })
 lvim.builtin.cmp.sources[#lvim.builtin.cmp.sources + 1] = { name = "cmdline_history" }
-lvim.builtin.cmp.sources[#lvim.builtin.cmp.sources + 1] = { name = "ultisnips" }
+-- lvim.builtin.cmp.sources[#lvim.builtin.cmp.sources + 1] = { name = "ultisnips" }
 lvim.builtin.cmp.sources[#lvim.builtin.cmp.sources + 1] = { name = "vsnip" }
 lvim.builtin.cmp.sources[#lvim.builtin.cmp.sources + 1] = { name = "orgmode" }
 lvim.builtin.cmp.sources[#lvim.builtin.cmp.sources + 1] = { name = "dap" }
