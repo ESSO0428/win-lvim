@@ -154,25 +154,26 @@ function! SetWslClipboard()
     \      '+': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
     \      '*': 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
     \   },
-    \   'cache_enabled': 0,
+    \   'cache_enabled': 1,
     \ }
 endfunction
 
 command! SetClipboardOsc52 call SetOsc52Clipboard() | checkhealth provider
 command! SetClipboardWsl call SetWslClipboard() | checkhealth provider
 if has('gui_running') || has('nvim')
-    let g:clipboard = {
-    \   'name': 'win32yank',
-    \   'copy': {
-    \       '+': 'win32yank.exe -i --crlf',
-    \       '*': 'win32yank.exe -i --crlf',
-    \   },
-    \   'paste': {
-    \       '+': 'win32yank.exe -o --lf',
-    \       '*': 'win32yank.exe -o --lf',
-    \   },
-    \   'cache_enabled': 1,
-    \ }
+  " call SetWslClipboard()
+  let g:clipboard = {
+  \   'name': 'win32yank',
+  \   'copy': {
+  \       '+': 'win32yank.exe -i --crlf',
+  \       '*': 'win32yank.exe -i --crlf',
+  \   },
+  \   'paste': {
+  \       '+': 'win32yank.exe -o --lf',
+  \       '*': 'win32yank.exe -o --lf',
+  \   },
+  \   'cache_enabled': 1,
+  \ }
 else
   call SetOsc52Clipboard()
 endif
