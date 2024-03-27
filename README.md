@@ -10,6 +10,48 @@ use neovim pre-config lunavim
 
 ## Introduction
 
+### prerequisite
+
+- powershell >= 7.4.1
+   ```powershell
+   winget install --id=Microsoft.PowerShell --version=7.4.1
+   ```
+- NodeJS
+   ```powershell
+   winget install NodeJS
+   ```
+- make
+   ```powershell
+   choco install make
+   ```
+- gcc
+   ```powershell
+   # winget search gcc
+   # will find Arm.GnuArmEmbeddedToolchain
+   # then run below (but below failed)
+   # winget install Arm.GnuArmEmbeddedToolchain
+
+   # use this
+   scoop install gcc
+   ```
+- neovim 0.9.4 (above)
+  ```powershell
+  winget install neovim
+  # or
+  # winget upgrade neovim
+  ```
+- neovim python api
+   ```powershell
+   pip3 install neovim
+   npm install -g neovim
+   ```
+- lunavim install
+  ```powershell
+  # if check above prerequisite ok!!
+  # then run below
+  $LV_BRANCH='release-1.3/neovim-0.9'; iwr https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.ps1 -UseBasicParsing | iex
+  ```
+
 ### Current support neovim version
 
 NVIM v0.9.4 (release)
