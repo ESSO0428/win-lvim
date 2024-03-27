@@ -524,7 +524,7 @@ lvim.plugins = {
     end
   },
   { "sindrets/winshift.nvim" },
-  -- { "quangnguyen30192/cmp-nvim-ultisnips" },
+  { "quangnguyen30192/cmp-nvim-ultisnips" },
   {
     "ray-x/lsp_signature.nvim",
     event = "BufRead",
@@ -538,7 +538,7 @@ lvim.plugins = {
       })
     end
   },
-  -- { "SirVer/ultisnips" },
+  { "SirVer/ultisnips" },
   { "theniceboy/vim-snippets" },
   { "nvim-telescope/telescope-media-files.nvim" },
   {
