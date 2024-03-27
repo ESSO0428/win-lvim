@@ -1,13 +1,13 @@
 " ==================== Auto load for first time uses ====================
-let g:MYVIMRC="$HOME\\AppData\\Local\\lvim\\init.vim"
-if empty(glob($HOME.'\\AppData\\Local\\lvim\\autoload\\plug.vim'))
+let g:MYVIMRC="$HOME/AppData/Local/lvim/init.vim"
+if empty(glob($HOME.'/AppData/Local/lvim/autoload/plug.vim'))
 	" silent !curl -fLo $HOME\\AppData\\Local\\lvim\\autoload\\plug.vim --create-dirs
 	" 			\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
           silent !powershell -NoProfile -ExecutionPolicy Bypass -Command "& {Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim' -OutFile ('$HOME\AppData\Local\lvim\autoload\plug.vim') -UseBasicParsing}"
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call plug#begin('$HOME\\AppData\\Local\\lvim\\plugged')
+call plug#begin('$HOME/AppData/Local/lvim/plugged')
 " ========= nvim notebook (Andy6) =========
 " Plug 'SirVer/ultisnips'
 " Plug 'theniceboy/vim-snippets'
