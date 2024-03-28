@@ -174,11 +174,16 @@ function wsl_system_open_dir()
   -- vim.api.nvim_command(string.format("silent !xdg-open '%s'", path))
   -- 檢查是否可以找到 explorer.exe
   local explorer_exists = vim.fn.executable('explorer.exe') == 1
-  if explorer_exists then
-    -- vim.api.nvim_command(string.format("silent !explorer.exe `wslpath -w '%s'`", path))
+  local is_windows = vim.loop.os_uname().sysname == "Windows_NT"
+
+  if explorer_exists and is_windows then
+    -- Windows 系統，且存在 explorer.exe，不需要使用 wslpath
+    vim.api.nvim_command(string.format("silent !explorer.exe '%s'", basedir))
+  elseif explorer_exists then
+    -- 可能處於 WSL 環境，需要轉換路徑
     vim.api.nvim_command(string.format("silent !explorer.exe `wslpath -w '%s'`", basedir))
   else
-    -- 否則，使用 xdg-open 打開文件夾
+    -- 非 Windows 系統，使用 xdg-open 打開文件夾
     vim.api.nvim_command(string.format("silent !xdg-open '%s'", basedir))
   end
 end
@@ -196,9 +201,14 @@ function wsl_system_open()
   vim.api.nvim_command("silent !open -g " .. path)
   -- Linux: open file in default application
   -- vim.api.nvim_command(string.format("silent !xdg-open '%s'", path))
+  local is_windows = vim.loop.os_uname().sysname == "Windows_NT"
   local explorer_exists = vim.fn.executable('explorer.exe') == 1
   -- 檢查是否可以找到 explorer.exe
-  if explorer_exists then
+  if is_windows and explorer_exists then
+    -- Windows 環境，直接使用 explorer.exe 打開，不需要轉換路徑
+    vim.api.nvim_command(string.format("silent !explorer.exe '%s'", path))
+  elseif explorer_exists then
+    -- 不是 Windows 但存在 explorer.exe，可能是在 WSL 下，需要轉換路徑
     -- vim.api.nvim_command(string.format("silent !explorer.exe `wslpath -w '%s'`", path))
     vim.api.nvim_command(string.format("silent !explorer.exe `wslpath -w '%s'`", path))
   else
