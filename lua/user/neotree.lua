@@ -100,12 +100,17 @@ local custom_commands = {
     local is_folder = node.type == "directory"
     local basedir = is_folder and abspath or vim.fn.fnamemodify(abspath, ":h")
     -- 檢查是否可以找到 explorer.exe
+    local is_windows = vim.loop.os_uname().sysname == "Windows_NT"
     local explorer_exists = vim.fn.executable('explorer.exe') == 1
-    if explorer_exists then
-      -- vim.api.nvim_command(string.format("silent !explorer.exe `wslpath -w '%s'`", path))
+
+    if is_windows and explorer_exists then
+      -- 直接使用 Windows 的路徑格式，無需轉換
+      vim.api.nvim_command(string.format("silent !explorer.exe '%s'", basedir:gsub("/", "\\")))
+    elseif explorer_exists then
+      -- 在 WSL 中使用 explorer.exe，需要路徑轉換
       vim.api.nvim_command(string.format("silent !explorer.exe `wslpath -w '%s'`", basedir))
     else
-      -- 否則，使用 xdg-open 打開文件夾
+      -- 使用 xdg-open 打開文件夾
       vim.api.nvim_command(string.format("silent !xdg-open '%s'", basedir))
     end
   end,
@@ -118,12 +123,21 @@ local custom_commands = {
     -- Linux: open file in default application
     -- vim.api.nvim_command(string.format("silent !xdg-open '%s'", path))
     local explorer_exists = vim.fn.executable('explorer.exe') == 1
+    local is_windows = vim.loop.os_uname().sysname == "Windows_NT"
+
     -- 檢查是否可以找到 explorer.exe
     if explorer_exists then
-      -- vim.api.nvim_command(string.format("silent !explorer.exe `wslpath -w '%s'`", path))
-      vim.api.nvim_command(string.format("silent !explorer.exe `wslpath -w '%s'`", path))
+      if is_windows then
+        -- 如果是 Windows 环境，直接使用 explorer.exe 打开路径
+        -- 注意：路径中的斜杠需要转换为反斜杠
+        local windows_path = path:gsub("/", "\\")
+        vim.api.nvim_command(string.format("silent !explorer.exe '%s'", windows_path))
+      else
+        -- 如果在 WSL 环境下且找到了 explorer.exe，使用 wslpath 转换路径
+        vim.api.nvim_command(string.format("silent !explorer.exe `wslpath -w '%s'`", path))
+      end
     else
-      -- 否則，使用 xdg-open 打開文件夾
+      -- 在其他环境（如 Linux 或 macOS）下，使用 xdg-open 或 open 打开文件夹
       vim.api.nvim_command(string.format("silent !xdg-open '%s'", path))
     end
   end,
