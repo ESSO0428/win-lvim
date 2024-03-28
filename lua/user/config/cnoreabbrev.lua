@@ -10,9 +10,15 @@ vim.cmd([[
 ]])
 vim.cmd([[
 function! OpenExplorer(path)
-  if executable("explorer.exe")
+  " 檢測是否為 Windows 環境
+  if has("win32") || has("win64")
+    " Windows 環境: 直接使用 explorer.exe
+    let command = "silent !explorer.exe '".a:path."'"
+  elseif executable("explorer.exe")
+    " 非 Windows，但可執行 explorer.exe (可能在 WSL 中): 使用 wslpath 轉換
     let command = "silent !explorer.exe `wslpath -w '".a:path."'`"
   else
+    " 其他環境: 使用 xdg-open
     let command = "silent !xdg-open '".a:path."'"
   endif
   execute command
