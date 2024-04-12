@@ -23,6 +23,8 @@ lvim.lsp.buffer_mappings.normal_mode['gh'] = { "<cmd>lua lsp_or_jupyter_signatur
 
 lvim.keys.normal_mode['gs']                = ":Antovim<cr>"
 lvim.keys.normal_mode['ga']                = ":TSJToggle<cr>"
+-- lvim.keys.normal_mode['gm']                = "<cmd>lua vim.lsp.buf.signature_help()<cr>"
+lvim.keys.normal_mode['gm']                = "<cmd>lua require('lsp_signature').toggle_float_win()<cr>"
 
 -- replace to Lspsaga code action
 -- lvim.keys.normal_mode['<leader>ua']           = { "<cmd>lua vim.lsp.buf.code_action()<cr>" }
@@ -53,8 +55,9 @@ lvim.builtin.which_key.mappings['c']       = { ":Telescope lsp_references<CR>", 
 lvim.builtin.which_key.mappings['v']       = { ":Telescope lsp_document_symbols<CR>", "lsp_document_symbols" }
 
 -- lvim.lsp.buffer_mappings.normal_mode['gd'] = nil
-lvim.keys.normal_mode['<a-o>']             = ":lua vim.lsp.buf.definition()<CR>"
+-- lvim.keys.normal_mode['<a-o>']             = ":lua vim.lsp.buf.definition()<CR>"
 -- lvim.keys.normal_mode['<a-o>']             = "<cmd>Lspsaga goto_definition<CR>"
+lvim.keys.normal_mode['<a-o>']             = ":lua require('telescope.builtin').lsp_definitions()<CR>"
 lvim.keys.normal_mode['<leader><a-o>']     = ":lua require('goto-preview').goto_preview_definition()<CR>"
 lvim.keys.normal_mode['sL']                = ":wincmd L<CR>"
 lvim.keys.normal_mode['sK']                = ":wincmd J<CR>"
