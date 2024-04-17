@@ -81,10 +81,10 @@ Run :checkhealth for more info
         # Prerequisites:
         # 1. Ensure you have an SSH key: cat ~/.ssh/id_rsa.pub
         # 2. Add your SSH key to GitHub: go to https://github.com/settings/keys and add the key
-        git clone git@github.com:ESSO0428/lvim.git
+        git clone git@github.com:ESSO0428/win-lvim.git
         
         # Common user
-        git clone https://github.com/ESSO0428/lvim.git
+        git clone https://github.com/ESSO0428/win-lvim.git
         ```
     2. install `lunavim` and `neovim` use my script
         ```bash
