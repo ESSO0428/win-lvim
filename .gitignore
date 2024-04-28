@@ -3,6 +3,5 @@ autoload/
 plugged/
 snapshots/
 lazy-lock.json
-!/.luarc.json
-**/.luarc.json
+lua/**/.luarc.json
 gitlog.log
