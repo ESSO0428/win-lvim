@@ -255,6 +255,59 @@ lvim.plugins = {
     end
   },
   { "anuvyklack/hydra.nvim" },
+  {
+    "ESSO0428/NotebookNavigator.nvim",
+    keys = {
+      { "[e", function() require("notebook-navigator").run_cells_above "" end },
+      { "]e", function() require("notebook-navigator").run_cells_below "" end },
+    },
+    dependencies = {
+      "echasnovski/mini.comment",
+      -- "akinsho/toggleterm.nvim", -- alternative repl provider
+      "anuvyklack/hydra.nvim",
+    },
+    event = "VeryLazy",
+    config = function()
+      local nn = require "notebook-navigator"
+      nn.setup({
+        activate_hydra_keys = "<leader>hj",
+        show_hydra_hint = false,
+        hydra_keys = {
+          comment = "c",
+          run = "e",
+          run_and_move = "nil",
+          move_up = "{",
+          move_down = "}",
+          split_cell = "sc",
+          add_cell_before = "nil",
+          add_cell_after = "nil",
+        },
+        repl_provider = "iron"
+      })
+    end
+  },
+  {
+    "echasnovski/mini.ai",
+    event = "VeryLazy",
+    dependencies = { "ESSO0428/NotebookNavigator.nvim" },
+    opts = function()
+      local nn = require "notebook-navigator"
+
+      local opts = { custom_textobjects = { h = nn.miniai_spec } }
+      return opts
+    end
+  },
+  {
+    "echasnovski/mini.hipatterns",
+    event = "VeryLazy",
+    dependencies = { "ESSO0428/NotebookNavigator.nvim" },
+    opts = function()
+      local nn = require "notebook-navigator"
+
+      local opts = { highlighters = { cells = nn.minihipatterns_spec } }
+      return opts
+    end
+  },
   { "jbyuki/venn.nvim" },
   {
     'altermo/ultimate-autopair.nvim',
