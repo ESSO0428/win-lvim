@@ -85,7 +85,29 @@ function peekFoldedLinesUnderCursor()
   end
 end
 
-lvim.keys.normal_mode['<leader>uu']    = { "<cmd>lua peekFoldedLinesUnderCursor()<cr>" }
+lvim.keys.normal_mode['<leader>uu'] = { "<cmd>lua peekFoldedLinesUnderCursor()<cr>" }
+
+
+function vscode_like_foldLevel_enhance(n)
+  require('fold-cycle').close_all()
+  n = n - 1
+  if n >= 1 then
+    for i = 1, n do
+      require('fold-cycle').open()
+    end
+  end
+end
+
+lvim.keys.normal_mode[']1'] = { '<cmd>lua vscode_like_foldLevel_enhance(1)<cr>' }
+lvim.keys.normal_mode[']2'] = { '<cmd>lua vscode_like_foldLevel_enhance(2)<cr>' }
+lvim.keys.normal_mode[']3'] = { '<cmd>lua vscode_like_foldLevel_enhance(3)<cr>' }
+lvim.keys.normal_mode[']4'] = { '<cmd>lua vscode_like_foldLevel_enhance(4)<cr>' }
+lvim.keys.normal_mode[']5'] = { '<cmd>lua vscode_like_foldLevel_enhance(5)<cr>' }
+lvim.keys.normal_mode[']6'] = { '<cmd>lua vscode_like_foldLevel_enhance(6)<cr>' }
+lvim.keys.normal_mode[']7'] = { '<cmd>lua vscode_like_foldLevel_enhance(7)<cr>' }
+lvim.keys.normal_mode[']8'] = { '<cmd>lua vscode_like_foldLevel_enhance(8)<cr>' }
+lvim.keys.normal_mode[']9'] = { '<cmd>lua vscode_like_foldLevel_enhance(9)<cr>' }
+
 
 -- lvim.keys.visual_mode['<leader>Od'] = "zo"
 
