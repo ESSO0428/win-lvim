@@ -10,6 +10,7 @@ lvim.builtin.which_key.mappings["tA"] = { "<cmd>Limelight!<cr>", "Limelight Clos
 if lvim.transparent_window == true then
   vim.cmd "au ColorScheme * hi Normal ctermbg=none guibg=none"
   vim.cmd "au ColorScheme * hi SignColumn ctermbg=none guibg=none"
+  vim.cmd "au ColorScheme * exec 'hi FoldColumn guibg=none guifg=' . synIDattr(synIDtrans(hlID('Folded')), 'fg', 'gui')"
   vim.cmd "au ColorScheme * hi NormalNC ctermbg=none guibg=none"
   vim.cmd "au ColorScheme * hi MsgArea ctermbg=none guibg=none"
   vim.cmd "au ColorScheme * hi TelescopeNormal ctermbg=none guibg=none"
@@ -80,6 +81,25 @@ if lvim.transparent_window == true then
   vim.cmd "au ColorScheme * hi Comment guifg=#71839b"
 end
 --]]
+
+-- Reference : https://github.com/sindrets/diffview.nvim/issues/241
+vim.cmd "au ColorScheme * hi DiffAdd gui=none guifg=none guibg=#2C6468"
+vim.cmd "au ColorScheme * hi DiffChange gui=none guifg=none guibg=#272D43"
+vim.cmd "au ColorScheme * hi DiffText gui=none guifg=none guibg=#4A5B80"
+vim.cmd "au ColorScheme * hi DiffDelete gui=none guifg=none guibg=#5F3D4D"
+vim.cmd "au ColorScheme * hi DiffviewDiffAddAsDelete gui=none guifg=none guibg=#5F3D4D"
+vim.cmd "au ColorScheme * hi DiffviewDiffDelete gui=none guifg=#3B4252 guibg=none"
+
+-- Left panel
+-- "DiffChange:DiffAddAsDelete",
+-- "DiffText:DiffDeleteText",
+vim.cmd "au ColorScheme * hi DiffAddAsDelete gui=none guifg=none guibg=#5F3D4D"
+vim.cmd "au ColorScheme * hi DiffDeleteText gui=none guifg=none guibg=#5A1D1D"
+
+-- Right panel
+-- "DiffChange:DiffAdd",
+-- "DiffText:DiffAddText",
+vim.cmd "au ColorScheme * hi DiffAddText gui=none guifg=none guibg=#2C6468"
 
 -- lvim.builtin.bufferline
 vim.g.vim_pid                                          = vim.fn.getpid()
@@ -157,11 +177,39 @@ else
     notify.notify(msg, level, opts)
   end
 end
-local autocommand = {
-  "TextYankPost",      -- see `:h autocmd-events`
-  {                    -- this table is passed verbatim as `opts` to `nvim_create_autocmd`
-    pattern = { "*" }, -- see `:h autocmd-events`
-    command = "silent! lua vim.highlight.on_yank{higroup='IncSearch', timeout=200}",
+
+-- Stolen from Akinsho
+local autocommands = {
+  {
+    "TextYankPost",      -- see `:h autocmd-events`
+    {                    -- this table is passed verbatim as `opts` to `nvim_create_autocmd`
+      pattern = { "*" }, -- see `:h autocmd-events`
+      command = "silent! lua vim.highlight.on_yank{higroup='IncSearch', timeout=200}",
+    }
+  },
+  {
+    "ColorScheme",
+    {
+      pattern = { "*" },
+      callback = function()
+        vim.opt.fillchars = [[eob: ,fold: ,foldopen:,foldsep: ,foldclose:]]
+        vim.opt.fillchars:append { diff = "╱" }
+      end
+    }
+  },
+  {
+    "BufReadPost",
+    {
+      pattern = { "*" },
+      callback = function()
+        -- NOTE: fix semshi highlighting conflict with treesitter
+        if vim.bo.filetype == "python" then
+          vim.bo.syntax = "on"
+        end
+      end
+    }
   }
 }
-table.insert(lvim.autocommands, autocommand)
+for _, autocommand in pairs(autocommands) do
+  table.insert(lvim.autocommands, autocommand)
+end

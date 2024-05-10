@@ -309,14 +309,6 @@ lvim.plugins = {
     end
   },
   { "jbyuki/venn.nvim" },
-  {
-    'altermo/ultimate-autopair.nvim',
-    event = { 'InsertEnter', 'CmdlineEnter' },
-    branch = 'v0.6', --recommended as each new version will have breaking changes
-    opts = {
-      --Config goes here
-    }
-  },
   { "ESSO0428/bookmarks.nvim" },
   {
     "ESSO0428/vim-dadbod-ui",
@@ -351,6 +343,19 @@ lvim.plugins = {
   },
   { "hrsh7th/cmp-copilot" },
   -- { "HiPhish/nvim-ts-rainbow2" },
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    branch = "canary",
+    dependencies = {
+      { "github/copilot.vim" },    -- or github/copilot.vim
+      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+    },
+    opts = {
+      debug = true, -- Enable debugging
+      -- See Configuration section for rest
+    },
+    -- See Commands section for default commands if you want to lazy load on them
+  },
   { "HiPhish/rainbow-delimiters.nvim" },
   {
     "nvim-treesitter/playground",
@@ -395,6 +400,26 @@ lvim.plugins = {
   {
     'kevinhwang91/nvim-ufo',
     deprecated = { 'kevinhwang91/promise-async' }
+  },
+  {
+    'luukvbaal/statuscol.nvim',
+    opts = function()
+      local builtin = require('statuscol.builtin')
+      return {
+        setopt = true,
+        -- override the default list of segments with:
+        -- number-less fold indicator, then signs, then line number & separator
+        segments = {
+          { text = { '%s' },                  click = 'v:lua.ScSa' },
+          { text = { builtin.foldfunc, ' ' }, click = 'v:lua.ScFa' },
+          {
+            text = { builtin.lnumfunc, ' ' },
+            condition = { true, builtin.not_empty },
+            click = 'v:lua.ScLa',
+          },
+        },
+      }
+    end,
   },
   {
     'jghauser/fold-cycle.nvim',
@@ -731,6 +756,12 @@ lvim.plugins = {
     }
   },
   { "nvim-lua/popup.nvim" },
+  {
+    "roobert/hoversplit.nvim",
+    config = function()
+      require("hoversplit").setup()
+    end
+  },
   {
     "iamcco/markdown-preview.nvim",
     build = "cd app && npm install",

@@ -13,7 +13,7 @@ vim.cmd [[
 ]]
 
 -- vim options
-vim.opt.guifont = "Hack:h10"
+vim.opt.guifont = "Hack Nerd Font Mono:h10"
 vim.opt.conceallevel = 2
 vim.opt.concealcursor = 'nc'
 vim.opt.shiftwidth = 2
