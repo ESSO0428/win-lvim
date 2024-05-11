@@ -10,4 +10,4 @@ if (-not $env:LUNARVIM_CONFIG_DIR) { $env:LUNARVIM_CONFIG_DIR = "$env:XDG_CONFIG
 if (-not $env:LUNARVIM_CACHE_DIR) { $env:LUNARVIM_CACHE_DIR = "$env:XDG_CACHE_HOME\lvim" }
 if (-not $env:LUNARVIM_BASE_DIR) { $env:LUNARVIM_BASE_DIR = "$env:LUNARVIM_RUNTIME_DIR\lvim" }
 
-nvim-qt @args -- -u "$env:LUNARVIM_RUNTIME_DIR\lvim\init.lua"
+nvim-qt -- -u "$env:LUNARVIM_RUNTIME_DIR\lvim\init.lua" @args
