@@ -1,12 +1,39 @@
 -- NOTE: 1. The primary modifications are within the 'require("bufferline.ui").tabline' function.
 -- NOTE: 2. Use 'tabline.total_tab_length' directly to obtain the tab indicator instead of the previous method.
 -- NOTE: 3. The other functions are dependent on 'require("bufferline.ui").tabline' and serve as auxiliary to the tabline function.
+-- NOTE: 4. [240515] NEW FEATURE INTEGRATION: bufferline.nvim and tabline.nvim in setup config
 local lazy = require("bufferline.lazy")
 local utils = lazy.require("bufferline.utils") ---@module "bufferline.utils"
 local config = lazy.require("bufferline.config") ---@module "bufferline.config"
 local constants = lazy.require("bufferline.constants") ---@module "bufferline.constants"
 local highlights = lazy.require("bufferline.highlights") ---@module "bufferline.highlights"
 local api = vim.api
+
+-- NOTE: [240515] NEW FEATURE INTEGRATION: bufferline.nvim and tabline.nvim in setup config
+local M = require('lvim.core.bufferline')
+M.setup = function()
+  require("lvim.keymappings").load(lvim.builtin.bufferline.keymap)
+
+  local status_ok, bufferline = pcall(require, "bufferline")
+  if not status_ok then
+    return
+  end
+
+  -- can't be set in settings.lua because default tabline would flash before bufferline is loaded
+  vim.opt.showtabline = 2
+
+  bufferline.setup {
+    options = lvim.builtin.bufferline.options,
+    highlights = lvim.builtin.bufferline.highlights,
+  }
+
+  if lvim.builtin.bufferline.on_config_done then
+    lvim.builtin.bufferline.on_config_done()
+  end
+  vim.o.tabline = "%!v:lua.nvim_bufferline() .. v:lua.require'tabline'.tabline_tabs()"
+end
+
+-- NOTE: before [240515] note 1~3 features
 
 -- string.len counts number of bytes and so the unicode icons are counted
 -- larger than their display width. So we use nvim's strwidth
@@ -232,3 +259,4 @@ require("bufferline.ui").tabline = function(items, tab_indicators)
     left_offset_size = left_offset_size + left_marker_size,
   }
 end
+return M
